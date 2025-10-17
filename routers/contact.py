@@ -8,14 +8,15 @@ router = APIRouter()
 async def lead_contact_all():
     dummy_data = datetime.now()
     return [contact_schema.Contact(
-        id=1, name="スズキショウタ", email="aaa@gmail.com", url = "http:///", 
-        gender="male", message="テスト", is_enabled= True, 
+        id=1, name="スズキショウタ", email="aaa@gmail.com", url = "https://www.example-nonexistent-domain-xyz1234.com/this-page-does-not-exist", 
+        gender=2, message="テスト", is_enabled= True, 
         create_at= dummy_data
         )]
 
-@router.post("/contacts")
-async def create_contact():
-    pass
+@router.post("/contacts", response_model=contact_schema.Contact)
+async def create_contact(body: contact_schema.Contact):
+    return contact_schema.Contact(**body.model_dump())
+    
 
 @router.get("/contacts/{id}")
 async def read_contact():
