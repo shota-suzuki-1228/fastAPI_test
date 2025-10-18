@@ -12,4 +12,4 @@ class Contact(Base):
     gender = Column(Integer,nullable=False)
     message = Column(String(200),nullable=False)
     is_enabled = Column(Boolean,default=False)
-    create_at = Column(DateTime,default=datetime.utcnow)
+    create_at = Column(DateTime,default=datetime.now())
