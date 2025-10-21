@@ -10,6 +10,6 @@ async def create_contact(db: AsyncSession, contact: contact_schema.ContactCreate
     db_contact = contact_model.Contact(**contact_data)
 
     db.add(db_contact)
-    await db.commit(db_contact)
+    await db.commit()
     await db.refresh(db_contact)
     return db_contact

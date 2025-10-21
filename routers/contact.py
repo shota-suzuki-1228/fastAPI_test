@@ -7,7 +7,7 @@ from datetime import datetime
 
 router = APIRouter()
 
-@router.get("/contacts",response_model=list[contact_schema.Contact])
+@router.get("/contacts",response_model=list[contact_schema.ContactList])
 async def lead_contact_all():
     dummy_data = datetime.now()
     return [contact_schema.Contact(
