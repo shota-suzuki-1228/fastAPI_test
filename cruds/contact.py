@@ -27,3 +27,8 @@ async def get_contact_all(db: AsyncSession) -> List[Tuple[int, str, datetime]]:
         )
     )
     return result.all()
+
+async def get_contact(db: AsyncSession, id:int) -> contact_model.Contact | None:
+    query = select(contact_model.Contact).where(contact_model.Contact.id == id)
+    result:Result = await db.execute(query)
+    return result.scalars().first()
