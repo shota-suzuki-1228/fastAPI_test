@@ -33,5 +33,8 @@ async def update_contact_id(id: int, body: contact_schema.ContactCreate, db: Asy
     return await contact_crud.update_contact(db, body, original=contact)
 
 @router.delete("/contacts/{id}")
-async def delete_contact_id():
-    pass
+async def delete_contact_id(id: int, db: AsyncSession = Depends(get_db)):
+    contact = await contact_crud.get_contact(db=db, id=id)
+    if contact is None:
+        raise HTTPException(status_code=404, detail="そんな奴いねえよ！")
+    return await contact_crud.delete_contact(db, original=contact)
