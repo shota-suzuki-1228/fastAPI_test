@@ -19,16 +19,15 @@ async def create_contact(db: AsyncSession, contact: contact_schema.ContactCreate
     return db_contact
 
 async def get_contact_all(db: AsyncSession) -> List[Tuple[int, str, datetime]]:
-    result : Result = await db.execute(
-        select(
+    query = select(
             contact_model.Contact.id,
             contact_model.Contact.name,
             contact_model.Contact.create_at
         )
-    )
+    result : Result = await db.execute(query)
     return result.all()
 
 async def get_contact(db: AsyncSession, id:int) -> contact_model.Contact | None:
     query = select(contact_model.Contact).where(contact_model.Contact.id == id)
-    result:Result = await db.execute(query)
+    result : Result = await db.execute(query)
     return result.scalars().first()
