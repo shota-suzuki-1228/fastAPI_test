@@ -31,3 +31,15 @@ async def get_contact(db: AsyncSession, id:int) -> contact_model.Contact | None:
     query = select(contact_model.Contact).where(contact_model.Contact.id == id)
     result : Result = await db.execute(query)
     return result.scalars().first()
+
+async def update_contact(db: AsyncSession, contact: contact_schema.ContactCreate, original: contact_model.Contact) -> contact_model.Contact:
+    original.name = contact.name
+    original.email = contact.email
+    if original.url is not None:
+        original.url = str(contact.url)
+    original.gender = contact.gender
+    original.message = contact.message
+    db.add(original)
+    await db.commit()
+    await db.refresh(original)
+    return original
